@@ -24,6 +24,7 @@ const App = ({ children }) => {
         }
 
         body {
+          font-size: 10px;
           font-family: 'Margem';
         }
 

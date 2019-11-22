@@ -1,14 +1,31 @@
 import React, {useState} from "react";
 import App from './app'
 
+const Voting = () =>
+  <div class="spinner-border spinner-border-md" role="status">
+    <span class="sr-only">Votando...</span>
+  </div>
+
 const Home = () => {
   const [selected, setSelected] = useState(null)
+  const [voting, setVoting] = useState(false)
 
-  return (<App>
+  const vote = async () => {
+    await setVoting(true);
+
+    console.log({ selected })
+
+    setTimeout(() => {
+      setVoting(false)
+    }, 2000)
+  }
+
+  return (
+    <App>
       <section>
         <div className="poll-title">
           <h1>
-            Vote no seu idlabs preferido!
+            Vote<br /> no seu idlabs<br /> preferido!
           </h1>
         </div>
 
@@ -23,7 +40,9 @@ const Home = () => {
           )}
         </div>
 
-        <button>Votar</button>
+        <button type="button" disabled={!selected || voting} onClick={vote}>
+          {voting? <Voting/>: 'Votar'}
+        </button>
 
         <style jsx>{`
           section {
@@ -41,9 +60,8 @@ const Home = () => {
 
           .poll-title h1 {
             color:#4e00ea;
-            font-size:2.2rem !important;
-            font-weight:bold !important;
-            width: 55%;
+            font-size:2.2rem;
+            font-weight:bold;
           }
 
           .poll-options {
@@ -59,7 +77,8 @@ const Home = () => {
             background:#f9f9f9;
             color:#4e00ea;
             margin:0;
-            padding: 1rem;
+            padding: 1.2rem;
+            font-size: 1.2rem;
             position:relative;
             flex-grow: 2;
           }
@@ -71,30 +90,22 @@ const Home = () => {
           .poll-options label input[type="radio"] {
             position: absolute;
             top:0;
-            left:0;
+            left:-1000px;
             height:100%;
             width:0;
           }
 
           .poll-options label.selected {
             background:#eff3fd;
-            padding-left: 1.3rem;
             font-weight:bold;
-          }
-
-          .poll-options label input[type="radio"]:checked:before {
-            content: '';
-            background:#4e00ea;
-            width:0.3rem;
-            height:100%;
-            position:absolute;
-            top:0;
-            left:0;
+            border-left:0.4rem solid #4e00ea;
+            transition-property: border-left;
+            transition-duration: 0.4s;
           }
 
           button {
             width: 100%;
-            padding: 8px 16px;
+            padding: 1.2rem;
             outline: 0;
             background: #4e00ea;
             color: #fff;
@@ -102,9 +113,14 @@ const Home = () => {
             font-size: 24px;
             border-radius: 3px;
           }
+
+          button:disabled {
+            opacity:0.2;
+          }
         `}</style>
       </section>
-    </App>)
+    </App>
+  )
 };
 
 export default Home;
