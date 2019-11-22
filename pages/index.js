@@ -4,7 +4,7 @@ const Home = () => (
   <section>
     <div className="poll-title">
       <h1>
-        Vote <br/> no seu idlabs preferido!
+        Vote no seu idlabs preferido!
       </h1>
     </div>
 
@@ -33,8 +33,9 @@ const Home = () => (
 
       .poll-title h1 {
         color:#5500ff;
-        font-size:2rem !important;
+        font-size:3rem !important;
         font-weight:bold !important;
+        width: 50%;
       }
 
       .poll-options {
@@ -57,6 +58,13 @@ const Home = () => (
 
       .poll-options label input {
         display: none;
+      }
+
+      .poll-options label input:checked:after {
+        content: ' ';
+        width: 4rem;
+        background:#f0f;
+        border-left: 0.3rem solid #5500ff;
       }
     `}</style>
   </section>
