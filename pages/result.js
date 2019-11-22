@@ -1,9 +1,13 @@
 import React from "react";
-import App from './app'
+import App from '../layouts/app'
 import options from '../helpers/options'
 
 
+const getRandomPercentage = () => Math.random() * (99 - 1) + 1
+
 const Home = () => {
+  const percentages = [54, 29, 17]
+
   return (
     <App>
       <section>
@@ -14,7 +18,13 @@ const Home = () => {
         </div>
 
         <div className="poll-result">
-          {options.map(id => <p key={id}>{id} = 10%</p>
+          {options
+            .map((id, i) => ({ id, percentage: percentages[i] }))
+            .map(({id, percentage}) =>
+                <p key={id} className="poll-item">
+                    <span className="poll-item-text">{id} = {percentage}%</span>
+                    <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
+                </p>
           )}
         </div>
 
@@ -51,20 +61,40 @@ const Home = () => {
             flex-grow: 2;
           }
 
-          p {
+          .poll-item {
             width:100%;
             display:block;
             background:#f9f9f9;
             color:#4e00ea;
             margin:0;
-            padding: 1.2rem;
             font-size: 1.2rem;
+            height:70px;
             position:relative;
             flex-grow: 2;
           }
 
-          p:nth-child(odd) {
+          .poll-item:nth-child(odd) {
             background:#f5f5f5;
+          }
+
+          .poll-item-text {
+            z-index:10;
+            position:absolute;
+            top:0%;
+            left:0;
+            width:100%;
+            height:100%;
+            margin:1.2rem;
+          }
+
+          .poll-item-bg {
+            z-index:1;
+            background: #eff3fd;
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
           }
 
           .id-logo {

@@ -1,12 +1,7 @@
 import React, {useState} from "react";
 import {useRouter} from "next/router";
-import App from './app'
-
-const idLabsItems = [
-  'MeuIDemocracia',
-  'Fraudes Transacionais',
-  'Ferramenta de Marketing'
-]
+import App from '../layouts/app'
+import options from '../helpers/options'
 
 const Voting = () =>
   <div class="spinner-border spinner-border-md" role="status">
@@ -36,7 +31,7 @@ const Home = () => {
         </div>
 
         <div className="poll-options">
-          {idLabsItems.map(id =>
+          {options.map(id =>
             (
               <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
                 <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
