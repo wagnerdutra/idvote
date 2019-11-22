@@ -1,73 +1,106 @@
 import React from "react";
+import App from './app'
 
 const Home = () => (
-  <section>
-    <div className="poll-title">
-      <h1>
-        Vote no seu idlabs preferido!
-      </h1>
-    </div>
+  <App>
+    <section>
+      <div className="poll-title">
+        <h1>
+          Vote no seu idlabs preferido!
+        </h1>
+      </div>
 
-    <div className="poll-options">
-      {['Time 1', 'Time 2', 'Time 3', 'Time 4'].map(id =>
-        (
-          <label htmlFor={id} key={id}>
-            <input id={id} type="radio" name="vote" value={id} />
-              {id}
-          </label>
-        )
-      )}
-    </div>
+      <div className="poll-options">
+        {['Time 1', 'Time 2', 'Time 3', 'Time 4'].map(id =>
+          (
+            <label htmlFor={id} key={id}>
+              <input id={id} type="radio" name="vote" value={id} />
+                {id}
+            </label>
+          )
+        )}
+      </div>
 
-    <style jsx>{`
-      section {
-        display: flex;
-        flex-direction: column;
-      }
+      <button>Votar</button>
 
-      .poll-title {
-        margin:0;
-        padding: 2rem;
-        display:block;
-      }
+      <style jsx>{`
+        section {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          height: 100vh;
+        }
 
-      .poll-title h1 {
-        color:#5500ff;
-        font-size:3rem !important;
-        font-weight:bold !important;
-        width: 50%;
-      }
+        .poll-title {
+          margin:0;
+          padding: 2rem;
+          display:block;
+        }
 
-      .poll-options {
-        width:100%;
-        margin:0;
-        display:block;
-      }
+        .poll-title h1 {
+          color:#4e00ea;
+          font-size:3rem !important;
+          font-weight:bold !important;
+          width: 50%;
+        }
 
-      .poll-options label {
-        width:100%;
-        display:block;
-        background:#f9f9f9;
-        margin:0;
-        padding: 8px;
-      }
+        .poll-options {
+          width:100%;
+          margin:0;
+          display:block;
+          flex-grow: 2;
+        }
 
-      .poll-options label:nth-child(odd) {
-        background:#f5f5f5;
-      }
+        .poll-options label {
+          width:100%;
+          display:block;
+          background:#f9f9f9;
+          color:#4e00ea;
+          margin:0;
+          padding: 1rem;
+          position:relative;
+          flex-grow: 2;
+        }
 
-      .poll-options label input {
-        display: none;
-      }
+        .poll-options label:nth-child(odd) {
+          background:#f5f5f5;
+        }
 
-      .poll-options label input:checked:after {
-        content: ' ';
-        width: 4rem;
-        background:#f0f;
-        border-left: 0.3rem solid #5500ff;
-      }
-    `}</style>
-  </section>
+        .poll-options label input[type="radio"] {
+          position: absolute;
+          top:0;
+          left:0;
+          height:100%;
+          width:0;
+        }
+
+        .poll-options label input[type="radio"]:checked < label {
+          background:#c6d8fe;
+        }
+
+        .poll-options label input[type="radio"]:checked:before {
+          content: '';
+          background:#4e00ea;
+          width:0.3rem;
+          height:100%;
+          position:absolute;
+          top:0;
+          left:0;
+        }
+
+        button {
+          width: 100%;
+          padding: 8px 16px;
+          outline: 0;
+          background: #4e00ea;
+          color: #fff;
+          border: 0;
+          font-size: 24px;
+          border-radius: 3px;
+        }
+      `}</style>
+    </section>
+  </App>
 );
 
 export default Home;

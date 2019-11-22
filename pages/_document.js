@@ -22,17 +22,6 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-
-        <style jsx>{`
-          html {
-            width: 100%;
-            height: 100%;
-          }
-          body {
-            font-family: 'Margem';
-          }
-        `}
-        </style>
       </html>
     )
   }
