@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'Margem';
+    src: url('../font/Margem-Black.woff2') format('woff2'),
+        url('../font/Margem-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Margem';
+    src: url('../font/Margem-Regular.woff2') format('woff2'),
+        url('../font/Margem-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Margem';
+    src: url('../font/Margem-Medium.woff2') format('woff2'),
+        url('../font/Margem-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Margem XBold';
+    src: url('../font/Margem-XBold.woff2') format('woff2'),
+        url('../font/Margem-XBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Margem';
+    src: url('../font/Margem-Light.woff2') format('woff2'),
+        url('../font/Margem-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Margem';
+    src: url('../font/Margem-Bold.woff2') format('woff2'),
+        url('../font/Margem-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}

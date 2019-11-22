@@ -17,8 +17,22 @@ const App = ({ children }) => {
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
         }
+
+        html, body {
+          height: 100%;
+          width: 100%;
+        }
+
         body {
           font-family: 'Margem';
+        }
+
+        #__next {
+          height: 100%;
+        }
+
+        main {
+          height: inherit;
         }
       `}</style>
     </main>
