@@ -6,7 +6,7 @@ const App = ({ children }) => {
   return (
     <main>
       <Head>
-        <title>IdVote</title>
+        <title>idvote</title>
       </Head>
       {children}
       <style jsx global>{`
@@ -24,7 +24,7 @@ const App = ({ children }) => {
         }
 
         body {
-          font-size: 10px;
+          font-size:100%;
           font-family: 'Margem';
         }
 

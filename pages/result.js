@@ -1,5 +1,7 @@
 import React from "react";
 import App from './app'
+import options from '../helpers/options'
+
 
 const Home = () => {
   return (
@@ -11,12 +13,15 @@ const Home = () => {
           </h1>
         </div>
 
-        <div className="poll-options">
-          {['Time 1', 'Time 2', 'Time 3', 'Time 4'].map(id =>
-            (
-              <p id={id}>{id} = 10%</p>
-            )
+        <div className="poll-result">
+          {options.map(id => <p key={id}>{id} = 10%</p>
           )}
+        </div>
+
+        <div className="id-logo">
+            <a href="https://idwall.co" className="logo">
+                <img src="logo.svg" alt="Logo idwall" />
+            </a>
         </div>
 
         <style jsx>{`
@@ -39,19 +44,32 @@ const Home = () => {
             font-weight: bold;
           }
 
+          .poll-result {
+            width:100%;
+            margin:0;
+            display:block;
+            flex-grow: 2;
+          }
+
           p {
             width:100%;
             display:block;
             background:#f9f9f9;
             color:#4e00ea;
             margin:0;
-            padding: 1rem;
+            padding: 1.2rem;
+            font-size: 1.2rem;
             position:relative;
             flex-grow: 2;
           }
 
           p:nth-child(odd) {
             background:#f5f5f5;
+          }
+
+          .id-logo {
+              text-align:center;
+              margin-bottom:2rem;
           }
         `}</style>
       </section>

@@ -1,5 +1,12 @@
 import React, {useState} from "react";
+import {useRouter} from "next/router";
 import App from './app'
+
+const idLabsItems = [
+  'MeuIDemocracia',
+  'Fraudes Transacionais',
+  'Ferramenta de Marketing'
+]
 
 const Voting = () =>
   <div class="spinner-border spinner-border-md" role="status">
@@ -7,16 +14,15 @@ const Voting = () =>
   </div>
 
 const Home = () => {
+  const router = useRouter()
   const [selected, setSelected] = useState(null)
   const [voting, setVoting] = useState(false)
 
   const vote = async () => {
     await setVoting(true);
 
-    console.log({ selected })
-
     setTimeout(() => {
-      setVoting(false)
+      router.push('/result')
     }, 2000)
   }
 
@@ -30,7 +36,7 @@ const Home = () => {
         </div>
 
         <div className="poll-options">
-          {['Time 1', 'Time 2', 'Time 3', 'Time 4'].map(id =>
+          {idLabsItems.map(id =>
             (
               <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
                 <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
@@ -81,6 +87,7 @@ const Home = () => {
             font-size: 1.2rem;
             position:relative;
             flex-grow: 2;
+            cursor: pointer;
           }
 
           .poll-options label:nth-child(odd) {
