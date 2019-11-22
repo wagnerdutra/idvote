@@ -89,7 +89,7 @@ const Home = () => {
 
           .poll-item-bg {
             z-index:1;
-            background: #eff3fd;
+            background: #eaeffb;
             position:absolute;
             top:0;
             left:0;
