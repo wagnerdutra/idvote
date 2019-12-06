@@ -114,6 +114,7 @@ const Home = () => {
           .id-logo {
             text-align:center;
             margin-bottom:2rem;
+            margin-top: 2rem;
           }
         `}</style>
       </section>
