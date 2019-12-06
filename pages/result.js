@@ -11,6 +11,7 @@ const Home = () => {
     const starCountRef = firebase.ref('/voting');
 
     starCountRef.on('value', snapshot => {
+      console.log(snapshot.val())
       setVotes(Object.entries(snapshot.val()).map(([id, value]) => ({ id, ...value })))
     });
   }, [])
@@ -31,7 +32,7 @@ const Home = () => {
         <div className="poll-result">
           {votes
             .map(({ votes, label, id }) => {
-              const percentage = (votes * 100)/totalVotes
+              const percentage = totalVotes && (votes * 100)/totalVotes
               return (
                 <p key={id} className="poll-item">
                   <span className="poll-item-text">{label} = {percentage}%</span>
