@@ -49,10 +49,10 @@ const Home = () => {
             </div>
 
             <button type="button" disabled={!selected || voting} onClick={vote}>
-              {voting? <Spinner text="Votando..."/>: 'Votar'}
+              {voting? <Spinner text="Votando..." color="#fff"/>: 'Votar'}
             </button>
           </>
-        ) : <div className="loaging"><Spinner /></div>}
+        ) : <div className="loaging"><Spinner color="#4e00ea" /></div>}
 
         <style jsx>{`
           section {
@@ -132,7 +132,7 @@ const Home = () => {
           .loaging {
             display: flex;
             align-items: center;
-            height: 100%;
+            height: 100vh;
             justify-content: center;
           }
         `}</style>
