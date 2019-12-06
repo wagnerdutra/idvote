@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import App from '../layouts/app'
-import options from '../helpers/options'
 
-
-const getRandomPercentage = () => Math.random() * (99 - 1) + 1
+import firebase from '../services/firebase'
 
 const Home = () => {
-  const percentages = [54, 29, 17]
+  const [votes, setVotes] = useState([])
+  const [totalVotes, setTotalvotes] = useState(0)
+
+  useEffect(() => {
+    const starCountRef = firebase.ref('/voting');
+
+    starCountRef.on('value', snapshot => {
+      setVotes(Object.entries(snapshot.val()).map(([id, value]) => ({ id, ...value })))
+    });
+  }, [])
+
+  useEffect(() => {
+    setTotalvotes(votes.reduce((acc, {votes}) => acc + votes, 0))
+  }, [votes])
 
   return (
     <App>
@@ -18,20 +29,23 @@ const Home = () => {
         </div>
 
         <div className="poll-result">
-          {options
-            .map((id, i) => ({ id, percentage: percentages[i] }))
-            .map(({id, percentage}) =>
-                <p key={id} className="poll-item">
-                    <span className="poll-item-text">{id} = {percentage}%</span>
-                    <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
+          {votes
+            .map((vote, index) => {
+              const percentage = (vote.votes * 100)/totalVotes
+              return (
+                <p key={index} className="poll-item">
+                  <span className="poll-item-text">{vote.label} = {percentage}%</span>
+                  <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
                 </p>
+              )
+            }
           )}
         </div>
 
         <div className="id-logo">
-            <a href="https://idwall.co" className="logo">
-                <img src="logo.svg" alt="Logo idwall" />
-            </a>
+          <a href="https://idwall.co" className="logo">
+            <img src="logo.svg" alt="Logo idwall" />
+          </a>
         </div>
 
         <style jsx>{`
@@ -82,7 +96,6 @@ const Home = () => {
             position:absolute;
             top:0%;
             left:0;
-            width:100%;
             height:100%;
             margin:1.2rem;
           }
@@ -98,8 +111,8 @@ const Home = () => {
           }
 
           .id-logo {
-              text-align:center;
-              margin-bottom:2rem;
+            text-align:center;
+            margin-bottom:2rem;
           }
         `}</style>
       </section>

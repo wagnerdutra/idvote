@@ -1,49 +1,64 @@
-import React, {useState} from "react";
-import {useRouter} from "next/router";
+import React, { useState, useEffect } from "react";
 import App from '../layouts/app'
-import options from '../helpers/options'
 
-const Voting = () =>
-  <div class="spinner-border spinner-border-md" role="status">
-    <span class="sr-only">Votando...</span>
+import firebase from '../services/firebase'
+
+const Spinner = ({ text }) => (
+  <div className="spinner-border spinner-border-md" role="status">
+    <span className="sr-only">{text}</span>
   </div>
+)
+
+const Voting = () => <Spinner text="Votando..." />
 
 const Home = () => {
-  const router = useRouter()
   const [selected, setSelected] = useState(null)
   const [voting, setVoting] = useState(false)
+  const [votes, setVotes] = useState([])
 
   const vote = async () => {
     await setVoting(true);
 
     setTimeout(() => {
-      router.push('/result')
+      window.location.href = `meuid://meuid?action=AUTHORIZE&applicationId=142682c0-edc7-4415-8944-c320b43878e8&parameters=${btoa(selected)}`
     }, 2000)
   }
+
+  useEffect(() => {
+    async function getVotes() {
+      const snapshot = await firebase.ref('/voting').once('value')
+      setVotes(Object.entries(snapshot.val()).map(([id, value]) => ({ id, ...value })))
+    }
+    getVotes()
+  }, [])
 
   return (
     <App>
       <section>
-        <div className="poll-title">
-          <h1>
-            Vote<br /> no seu idlabs<br /> preferido!
-          </h1>
-        </div>
+        {votes.length > 0 ? (
+          <>
+            <div className="poll-title">
+              <h1>
+                Vote<br /> no seu idlabs<br /> preferido!
+              </h1>
+            </div>
 
-        <div className="poll-options">
-          {options.map(id =>
-            (
-              <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
-                <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
-                  {id}
-              </label>
-            )
-          )}
-        </div>
+            <div className="poll-options">
+              {votes.map(({ label, id }) =>
+                (
+                  <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
+                    <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
+                      {label}
+                  </label>
+                )
+              )}
+            </div>
 
-        <button type="button" disabled={!selected || voting} onClick={vote}>
-          {voting? <Voting/>: 'Votar'}
-        </button>
+            <button type="button" disabled={!selected || voting} onClick={vote}>
+              {voting? <Voting/>: 'Votar'}
+            </button>
+          </>
+        ) : <div className="loaging"><Spinner /></div>}
 
         <style jsx>{`
           section {
@@ -118,6 +133,13 @@ const Home = () => {
 
           button:disabled {
             opacity:0.2;
+          }
+
+          .loaging {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            justify-content: center;
           }
         `}</style>
       </section>
