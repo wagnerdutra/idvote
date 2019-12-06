@@ -30,11 +30,11 @@ const Home = () => {
 
         <div className="poll-result">
           {votes
-            .map((vote, index) => {
-              const percentage = (vote.votes * 100)/totalVotes
+            .map(({ votes, label, id }) => {
+              const percentage = (votes * 100)/totalVotes
               return (
-                <p key={index} className="poll-item">
-                  <span className="poll-item-text">{vote.label} = {percentage}%</span>
+                <p key={id} className="poll-item">
+                  <span className="poll-item-text">{label} = {percentage}%</span>
                   <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
                 </p>
               )
