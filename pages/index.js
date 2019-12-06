@@ -3,13 +3,7 @@ import App from '../layouts/app'
 
 import firebase from '../services/firebase'
 
-const Spinner = ({ text }) => (
-  <div className="spinner-border spinner-border-md" role="status">
-    <span className="sr-only">{text}</span>
-  </div>
-)
-
-const Voting = () => <Spinner text="Votando..." />
+import Spinner from '../components/Spinner'
 
 const Home = () => {
   const [selected, setSelected] = useState(null)
@@ -55,7 +49,7 @@ const Home = () => {
             </div>
 
             <button type="button" disabled={!selected || voting} onClick={vote}>
-              {voting? <Voting/>: 'Votar'}
+              {voting? <Spinner text="Votando..."/>: 'Votar'}
             </button>
           </>
         ) : <div className="loaging"><Spinner /></div>}
