@@ -30,28 +30,7 @@ const Home = () => {
     <App>
       <section>
         {votes.length > 0 ? (
-          <>
-            <div className="poll-title">
-              <h1>
-                Vote<br /> no seu idlabs<br /> preferido!
-              </h1>
-            </div>
-
-            <div className="poll-options">
-              {votes.map(({ label, id }) =>
-                (
-                  <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
-                    <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
-                      {label}
-                  </label>
-                )
-              )}
-            </div>
-
-            <button type="button" disabled={!selected || voting} onClick={vote}>
-              {voting? <Spinner text="Votando..." color="#fff"/>: 'Votar'}
-            </button>
-          </>
+          <div className="loaging"><Spinner color="#4e00ea" /></div>
         ) : <div className="loaging"><Spinner color="#4e00ea" /></div>}
 
         <style jsx>{`
@@ -132,7 +111,7 @@ const Home = () => {
           .loaging {
             display: flex;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             justify-content: center;
           }
         `}</style>

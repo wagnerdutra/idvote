@@ -25,6 +25,7 @@ const App = ({ children }) => {
         body {
           font-size:100%;
           font-family: 'Margem';
+          height: 100vh;
         }
 
         #__next {
