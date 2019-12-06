@@ -3,6 +3,8 @@ import App from '../layouts/app'
 
 import firebase from '../services/firebase'
 
+import Spinner from '../components/Spinner'
+
 const Home = () => {
   const [votes, setVotes] = useState([])
   const [totalVotes, setTotalvotes] = useState(0)
@@ -23,31 +25,35 @@ const Home = () => {
   return (
     <App>
       <section>
-        <div className="result-title">
-          <h1>
-            Resultado
-          </h1>
-        </div>
+        {votes.length > 0 ? (
+          <>
+            <div className="result-title">
+              <h1>
+                Resultado
+              </h1>
+            </div>
 
-        <div className="poll-result">
-          {votes
-            .map(({ votes, label, id }) => {
-              const percentage = totalVotes && (votes * 100)/totalVotes
-              return (
-                <p key={id} className="poll-item">
-                  <span className="poll-item-text">{label} = {percentage}%</span>
-                  <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
-                </p>
-              )
-            }
-          )}
-        </div>
+            <div className="poll-result">
+              {votes
+                .map(({ votes, label, id }) => {
+                  const percentage = totalVotes && (votes * 100)/totalVotes
+                  return (
+                    <p key={id} className="poll-item">
+                      <span className="poll-item-text">{label} = {percentage}%</span>
+                      <span className="poll-item-bg" style={{width: `${percentage}%`}}></span>
+                    </p>
+                  )
+                }
+              )}
+            </div>
 
-        <div className="id-logo">
-          <a href="https://idwall.co" className="logo">
-            <img src="logo.svg" alt="Logo idwall" />
-          </a>
-        </div>
+            <div className="id-logo">
+              <a href="https://idwall.co" className="logo">
+                <img src="logo.svg" alt="Logo idwall" />
+              </a>
+            </div>
+          </>
+        ) : <div className="loaging"><Spinner color="#4e00ea" /></div>}
 
         <style jsx>{`
           section {
@@ -115,6 +121,13 @@ const Home = () => {
             text-align:center;
             margin-bottom:2rem;
             margin-top: 2rem;
+          }
+
+          .loaging {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
           }
         `}</style>
       </section>
