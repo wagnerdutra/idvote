@@ -13,26 +13,18 @@ const Home = () => {
   const vote = async () => {
     await setVoting(true);
 
-    const parameters = btoa(selected);
-
-    // setTimeout(() => {
-    //   window.location.href = window.location.href + "result";
-    // }, 3000);
+    setTimeout(() => {
+      window.location.href = `meuid://meuid?action=AUTHORIZE&applicationId=142682c0-edc7-4415-8944-c320b43878e8&parameters=${btoa(
+        selected
+      )}`;
+    }, 2000);
   };
 
   useEffect(() => {
     async function getVotes() {
       const snapshot = await firebase.ref("/voting").once("value");
       setVotes(
-        Object.entries(snapshot.val()).map(([id, value]) => {
-          const parameters = btoa(id);
-
-          console.log(
-            id,
-            `meuid://meuid?action=AUTHORIZE&applicationId=142682c0-edc7-4415-8944-c320b43878e8&parameters=${parameters}`
-          );
-          return { id, ...value };
-        })
+        Object.entries(snapshot.val()).map(([id, value]) => ({ id, ...value }))
       );
     }
     getVotes();
