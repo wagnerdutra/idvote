@@ -1,30 +1,42 @@
 import React, { useState, useEffect } from "react";
-import App from '../layouts/app'
+import App from "../layouts/app";
 
-import firebase from '../services/firebase'
+import firebase from "../services/firebase";
 
-import Spinner from '../components/Spinner'
+import Spinner from "../components/Spinner";
 
 const Home = () => {
-  const [selected, setSelected] = useState(null)
-  const [voting, setVoting] = useState(false)
-  const [votes, setVotes] = useState([])
+  const [selected, setSelected] = useState(null);
+  const [voting, setVoting] = useState(false);
+  const [votes, setVotes] = useState([]);
 
   const vote = async () => {
     await setVoting(true);
 
-    setTimeout(() => {
-      window.location.href = `meuid://meuid?action=AUTHORIZE&applicationId=142682c0-edc7-4415-8944-c320b43878e8&parameters=${btoa(selected)}`
-    }, 2000)
-  }
+    const parameters = btoa(selected);
+
+    // setTimeout(() => {
+    //   window.location.href = window.location.href + "result";
+    // }, 3000);
+  };
 
   useEffect(() => {
     async function getVotes() {
-      const snapshot = await firebase.ref('/voting').once('value')
-      setVotes(Object.entries(snapshot.val()).map(([id, value]) => ({ id, ...value })))
+      const snapshot = await firebase.ref("/voting").once("value");
+      setVotes(
+        Object.entries(snapshot.val()).map(([id, value]) => {
+          const parameters = btoa(id);
+
+          console.log(
+            id,
+            `meuid://meuid?action=AUTHORIZE&applicationId=142682c0-edc7-4415-8944-c320b43878e8&parameters=${parameters}`
+          );
+          return { id, ...value };
+        })
+      );
     }
-    getVotes()
-  }, [])
+    getVotes();
+  }, []);
 
   return (
     <App>
@@ -33,26 +45,40 @@ const Home = () => {
           <>
             <div className="poll-title">
               <h1>
-                Vote<br /> no seu idlabs<br /> preferido!
+                Vote
+                <br /> no seu idlabs
+                <br /> preferido!
               </h1>
             </div>
 
             <div className="poll-options">
-              {votes.map(({ label, id }) =>
-                (
-                  <label htmlFor={id} key={id} className={id === selected ? 'selected' : ''}>
-                    <input id={id} type="radio" name="vote" checked={id === selected} onChange={() => setSelected(id)}/>
-                      {label}
-                  </label>
-                )
-              )}
+              {votes.map(({ label, id }) => (
+                <label
+                  htmlFor={id}
+                  key={id}
+                  className={id === selected ? "selected" : ""}
+                >
+                  <input
+                    id={id}
+                    type="radio"
+                    name="vote"
+                    checked={id === selected}
+                    onChange={() => setSelected(id)}
+                  />
+                  {label}
+                </label>
+              ))}
             </div>
 
             <button type="button" disabled={!selected || voting} onClick={vote}>
-              {voting? <Spinner text="Votando..." color="#fff"/>: 'Votar'}
+              {voting ? <Spinner text="Votando..." color="#fff" /> : "Votar"}
             </button>
           </>
-        ) : <div className="loaging"><Spinner color="#4e00ea" /></div>}
+        ) : (
+          <div className="loaging">
+            <Spinner color="#4e00ea" />
+          </div>
+        )}
 
         <style jsx>{`
           section {
@@ -63,53 +89,53 @@ const Home = () => {
           }
 
           .poll-title {
-            margin:0;
+            margin: 0;
             padding: 2rem;
-            display:block;
+            display: block;
           }
 
           .poll-title h1 {
-            color:#4e00ea;
-            font-size:2.2rem;
-            font-weight:bold;
+            color: #4e00ea;
+            font-size: 2.2rem;
+            font-weight: bold;
           }
 
           .poll-options {
-            width:100%;
-            margin:0;
-            display:block;
+            width: 100%;
+            margin: 0;
+            display: block;
             flex-grow: 2;
           }
 
           .poll-options label {
-            width:100%;
-            display:block;
-            background:#f9f9f9;
-            color:#4e00ea;
-            margin:0;
+            width: 100%;
+            display: block;
+            background: #f9f9f9;
+            color: #4e00ea;
+            margin: 0;
             padding: 1.2rem;
             font-size: 1.2rem;
-            position:relative;
+            position: relative;
             flex-grow: 2;
             cursor: pointer;
           }
 
           .poll-options label:nth-child(odd) {
-            background:#f5f5f5;
+            background: #f5f5f5;
           }
 
           .poll-options label input[type="radio"] {
             position: absolute;
-            top:0;
-            left:-1000px;
-            height:100%;
-            width:0;
+            top: 0;
+            left: -1000px;
+            height: 100%;
+            width: 0;
           }
 
           .poll-options label.selected {
-            background:#eff3fd;
-            font-weight:bold;
-            border-left:0.4rem solid #4e00ea;
+            background: #eff3fd;
+            font-weight: bold;
+            border-left: 0.4rem solid #4e00ea;
             transition-property: border-left;
             transition-duration: 0.4s;
           }
@@ -126,7 +152,7 @@ const Home = () => {
           }
 
           button:disabled {
-            opacity:0.2;
+            opacity: 0.2;
           }
 
           .loaging {
@@ -138,7 +164,7 @@ const Home = () => {
         `}</style>
       </section>
     </App>
-  )
+  );
 };
 
 export default Home;
